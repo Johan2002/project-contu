@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from './data/interceptor/catch/error.interceptor';
 import { ResponseInterceptor } from './data/interceptor/response/response.interceptor';
+import { ApiModule } from './api/api.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { ResponseInterceptor } from './data/interceptor/response/response.interc
       envFilePath: 'common/develop.env',
     }),
     TypeOrmModule.forRootAsync(TypeOrmConfigAsync),
+    ApiModule,
+    JwtModule,
   ],
   controllers: [],
   providers: [
