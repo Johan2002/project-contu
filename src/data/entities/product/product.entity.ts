@@ -18,10 +18,13 @@ export class Product {
   @Column({ type: 'numeric', nullable: false })
   productPrice: number;
 
+  @Column({ type: 'numeric', nullable: false })
+  productPriceCost: number;
+
   @Column({ type: 'varchar', nullable: true })
   productDescription: string;
 
-  @Column({ type: 'int4', nullable: false })
+  @Column({ type: 'int', nullable: false })
   productStock: number;
 
   @CreateDateColumn({ type: 'timestamp' })

@@ -12,11 +12,14 @@ export class Payment {
   @PrimaryGeneratedColumn('uuid')
   paymentsId: string;
 
-  @Column({ type: 'numeric', nullable: true })
-  Amount: number;
+  @Column({ type: 'numeric', nullable: false })
+  paymentValue: number;
 
   @Column({ type: 'timestamp', nullable: true })
   paymentDate: Date;
+
+  @Column({ type: 'numeric', nullable: false })
+  paymentConcept: number;
 
   @Column({ type: 'varchar' })
   paymentMethod: string;

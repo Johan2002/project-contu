@@ -12,7 +12,10 @@ import {
 @Entity()
 export class Customer {
   @PrimaryGeneratedColumn('uuid')
-  customeId: string;
+  customerId: string;
+
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  customerIdentity: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   customerName: string;
@@ -23,7 +26,7 @@ export class Customer {
   @Column({ type: 'varchar', nullable: false, unique: true })
   customerPhone: string;
 
-  @Column({ type: 'varchar', nullable: false, unique: true })
+  @Column({ type: 'varchar', nullable: false, unique: false })
   customerAddress: string;
 
   @CreateDateColumn({ type: 'timestamp' })

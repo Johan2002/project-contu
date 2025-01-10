@@ -14,9 +14,9 @@ export class Sale {
   saleId: string;
 
   @Column({ type: 'numeric', nullable: false })
-  total: number;
+  saleTotal: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: false })
   saleDate: string;
 
   @ManyToOne(() => Customer, (customer) => customer.sales)
