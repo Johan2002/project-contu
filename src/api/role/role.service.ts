@@ -18,7 +18,9 @@ export class RoleService {
       ...createRole,
     });
 
-    const role = await this.roleRepository.findOne({ where: { roleId } });
+    const role: IRole = await this.roleRepository.findOne({
+      where: { roleId },
+    });
 
     return role;
   }
@@ -28,7 +30,7 @@ export class RoleService {
   }
 
   async findOne(roleId: string): Promise<IRole> {
-    const role = await this.roleRepository.findOne({
+    const role: IRole = await this.roleRepository.findOne({
       where: { roleId },
     });
 

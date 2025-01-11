@@ -7,7 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { EPermission } from '../constants/permission.enum';
 import { PERMISSIONS_KEY } from '../decorators/permission.decorator';
-import { IPayload } from '../interfaces/api/auth/auth.interface';
+import { IJwtToken } from '../interfaces/api/auth/auth.interface';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -23,7 +23,7 @@ export class PermissionsGuard implements CanActivate {
       return true;
     }
 
-    const user = context.switchToHttp().getRequest().user as IPayload;
+    const user = context.switchToHttp().getRequest().user as IJwtToken;
     if (!user || !user.permissions) {
       throw new UnauthorizedException('User or permissions not found');
     }

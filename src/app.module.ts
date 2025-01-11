@@ -7,6 +7,7 @@ import { AllExceptionsFilter } from './data/interceptor/catch/error.interceptor'
 import { ResponseInterceptor } from './data/interceptor/response/response.interceptor';
 import { ApiModule } from './api/api.module';
 import { JwtModule } from '@nestjs/jwt';
+import { LoggingInterceptor } from './data/interceptor/catch/routes.interceptor';
 
 @Module({
   imports: [
@@ -27,6 +28,10 @@ import { JwtModule } from '@nestjs/jwt';
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })

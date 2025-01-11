@@ -18,7 +18,7 @@ export class ProductService {
       ...createProduct,
     });
 
-    const product = await this.productRepository.findOne({
+    const product: IProduct = await this.productRepository.findOne({
       where: { productId },
     });
 
@@ -30,7 +30,7 @@ export class ProductService {
   }
 
   async findOne(productId: string): Promise<IProduct> {
-    const product = await this.productRepository.findOne({
+    const product: IProduct = await this.productRepository.findOne({
       where: { productId },
     });
 
@@ -53,7 +53,7 @@ export class ProductService {
     if (!updateResult.affected)
       throw new NotFoundException('Product information could not be updated.');
 
-    const product = await this.productRepository.findOne({
+    const product: IProduct = await this.productRepository.findOne({
       where: { productId },
     });
 

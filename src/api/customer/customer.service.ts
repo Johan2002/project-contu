@@ -22,7 +22,7 @@ export class CustomerService {
       ...createCustomer,
     });
 
-    const customer = await this.customerRepository.findOne({
+    const customer: ICustomer = await this.customerRepository.findOne({
       where: { customerId },
     });
 
@@ -34,7 +34,7 @@ export class CustomerService {
   }
 
   async findOne(customerId: string): Promise<ICustomer> {
-    const costumer = await this.customerRepository.findOne({
+    const costumer: ICustomer = await this.customerRepository.findOne({
       where: { customerId },
     });
 

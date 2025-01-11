@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -11,6 +12,7 @@ import { PUBLIC_KEY } from '../constants/definitions.constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  private readonly logger: Logger = new Logger('AuthCatch');
   constructor(
     private readonly jwtService: JwtService,
     private reflector: Reflector,
@@ -37,8 +39,8 @@ export class AuthGuard implements CanActivate {
         secret: process.env.SECRET_JWT,
       });
       request.user = payload;
-      console.log('Token payload:', payload);
     } catch (error) {
+      this.logger.error('JWT verification failed:', error);
       throw new UnauthorizedException('Invalid token.');
     }
 

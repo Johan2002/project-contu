@@ -2,7 +2,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { IAuth, IPayload } from 'src/data/interfaces/api/auth/auth.interface';
+import {
+  IAuth,
+  IAuthenticatedUser,
+  IJwtToken,
+} from 'src/data/interfaces/api/auth/auth.interface';
+import { IUser } from 'src/data/interfaces/api/user/user.interface';
 
 @Injectable()
 export class AuthService {
@@ -10,8 +15,8 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
-  async login({ userName, userPassword }: IAuth) {
-    const user = await this.userService.findOneByUserName(userName);
+  async login({ userName, userPassword }: IAuth): Promise<IAuthenticatedUser> {
+    const user: IUser = await this.userService.findOneByUserName(userName);
     if (!user) {
       throw new UnauthorizedException('Please verify credentials.');
     }
@@ -24,20 +29,21 @@ export class AuthService {
       throw new UnauthorizedException('Please verify credentials.');
     }
 
-    const permissions: string[] =
-      user?.role?.permission?.map((permission) => permission.permissionName) ||
-      [];
-
     delete user.userPassword;
 
-    const payload: IPayload = {
+    const payload: IJwtToken = {
       ...user,
-      permissions,
+      permissions: user?.role?.permission?.map((permission) => {
+        return permission.permissionName;
+      }),
     };
+
+    delete payload.role.permission;
+
     console.log('payload :>> ', payload);
     const token = await this.jwtService.signAsync(payload);
     return {
-      acces_token: token,
+      token: token,
     };
   }
 }
